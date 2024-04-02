@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Gif } from '../../shared/interfaces';
+import { GifPlayerComponent } from './gif-player.component';
 
 @Component({
   standalone: true,
@@ -7,10 +8,14 @@ import { Gif } from '../../shared/interfaces';
   template: `
     @for (gif of gifs; track gif.permalink) {
     <div>
-      {{ gif.title }}
+      <gl-gif-player
+        [src]="gif.src"
+        [thumbnail]="gif.thumbnail"
+      ></gl-gif-player>
     </div>
     }
   `,
+  imports: [GifPlayerComponent],
 })
 export class GifListComponent {
   @Input({ required: true }) gifs!: Gif[];
