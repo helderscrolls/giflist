@@ -55,6 +55,7 @@ interface GifPlayerState {
       ></video>
     </div>
   `,
+  imports: [MatProgressSpinnerModule, NgStyle],
   styles: [
     `
       :host {
@@ -85,7 +86,6 @@ interface GifPlayerState {
       }
     `,
   ],
-  imports: [MatProgressSpinnerModule, NgStyle],
 })
 export class GifPlayerComponent {
   @Input({ required: true }) src!: string;
