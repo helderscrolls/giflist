@@ -32,6 +32,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     `
       mat-toolbar {
         height: 80px;
+        position: sticky;
       }
 
       mat-form-field {
