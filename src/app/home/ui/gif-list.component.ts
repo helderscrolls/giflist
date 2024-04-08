@@ -10,14 +10,13 @@ import { GifPlayerComponent } from './gif-player.component';
   standalone: true,
   selector: 'gl-gif-list',
   template: `
-    @for (gif of gifs; track gif.permalink) {
+    @for (gif of gifs; track gif.permalink){
     <div>
       <gl-gif-player
         [src]="gif.src"
         [thumbnail]="gif.thumbnail"
         data-testid="gif-list-item"
       ></gl-gif-player>
-
       <mat-toolbar color="primary">
         <span>{{ gif.title }}</span>
         <span class="toolbar-spacer"></span>
@@ -29,6 +28,8 @@ import { GifPlayerComponent } from './gif-player.component';
         </button>
       </mat-toolbar>
     </div>
+    } @empty {
+    <p>Can't find any gifs 🤷</p>
     }
   `,
   imports: [

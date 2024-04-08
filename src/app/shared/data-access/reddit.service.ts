@@ -58,6 +58,9 @@ export class RedditService {
         startWith(null),
         concatMap((lastKnownGif) =>
           this.fetchFromReddit(subreddit, lastKnownGif, 20).pipe(
+            // A single request might not give us enough valid gifs for a
+            // full page, as not every post is a valid gif
+            // Keep fetching more data until we do have enough for a page
             expand((response, index) => {
               const { gifs, gifsRequired, lastKnownGif } = response;
               const remainingGifsToFetch = gifsRequired - gifs.length;
@@ -90,6 +93,7 @@ export class RedditService {
         loading: true,
         gifs: [],
         lastKnownGif: null,
+        error: null,
       }));
     });
 
@@ -102,12 +106,13 @@ export class RedditService {
       }))
     );
 
-    this.error$.pipe(takeUntilDestroyed()).subscribe((error) =>
+    this.error$.pipe(takeUntilDestroyed()).subscribe((error) => {
       this.state.update((state) => ({
         ...state,
+        loading: false,
         error,
-      }))
-    );
+      }));
+    });
   }
 
   private fetchFromReddit(
